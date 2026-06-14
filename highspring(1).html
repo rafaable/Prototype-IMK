@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HighSpring — A Place for Curious Minds</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#FFFFFF;--bg:#F4F9FF;--bg-card:#EBF3FB;
+  --blue-pale:#D5EAFB;--blue-soft:#ACCFE7;--blue-main:#5B9DC9;
+  --blue-rich:#2C6FA8;--blue-deep:#194F7A;--navy:#0D2B45;
+  --black-bg:#071824;--text:#1A3348;--text-mid:#4A6882;--text-muted:#7A99B0;
+  --gold:#C8A84B;--success:#3A9E8F;--error:#C05050;
+  --font-d:'Cormorant Garamond',Georgia,serif;
+  --font-b:'Lora',Georgia,serif;
+  --font-m:'Space Mono','Courier New',monospace;
+  --sh-sm:0 2px 8px rgba(10,40,70,.08);
+  --sh-md:0 4px 20px rgba(10,40,70,.12);
+  --sh-lg:0 8px 40px rgba(10,40,70,.18);
+  --r:12px;--r-lg:20px;--pill:999px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--font-d);font-weight:600;line-height:1.2}
+p{color:var(--text-mid)}
+a{color:var(--blue-rich);text-decoration:none}
+img{max-width:100%}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.6rem;border-radius:var(--pill);font-family:var(--font-b);font-size:.9rem;font-weight:600;cursor:pointer;transition:all .25s;border:2px solid transparent;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--blue-rich);color:#fff;border-color:var(--blue-rich)}
+.btn-primary:hover{background:var(--blue-deep);border-color:var(--blue-deep);transform:translateY(-2px);box-shadow:var(--sh-md)}
+.btn-secondary{background:transparent;color:var(--blue-rich);border-color:var(--blue-rich)}
+.btn-secondary:hover{background:var(--blue-pale);transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-ghost:hover{background:rgba(255,255,255,.28)}
+.btn-gold{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700}
+.btn-gold:hover{background:#b8962f;transform:translateY(-2px)}
+.btn-dark{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn-dark:hover{background:var(--black-bg);transform:translateY(-2px)}
+.btn-sm{padding:.5rem 1.1rem;font-size:.8rem}
+
+/* HEADER */
+.site-header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--blue-pale);padding:0 1.5rem}
+.header-inner{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:1.5rem;height:68px}
+.logo-block{display:flex;align-items:center;gap:.7rem;flex-shrink:0;cursor:pointer;text-decoration:none}
+.logo-mark{width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:44px;height:44px}
+.logo-text .l-name{font-family:var(--font-d);font-size:1.35rem;font-weight:700;color:var(--blue-deep);letter-spacing:.3px;line-height:1}
+.logo-text .l-tag{font-family:var(--font-d);font-style:italic;font-size:.68rem;color:var(--text-muted);letter-spacing:1.5px;line-height:1.2}
+.main-nav{flex:1;display:flex;align-items:center;overflow-x:auto;scrollbar-width:none}
+.main-nav::-webkit-scrollbar{display:none}
+.nav-tab{padding:.55rem .9rem;font-family:var(--font-b);font-size:.82rem;font-weight:600;color:var(--text-mid);cursor:pointer;white-space:nowrap;transition:color .2s;border-bottom:2px solid transparent;letter-spacing:.2px}
+.nav-tab:hover,.nav-tab.active{color:var(--blue-rich);border-bottom-color:var(--blue-rich)}
+.header-actions{display:flex;gap:.6rem;flex-shrink:0}
+
+/* SECTION BASE */
+.section{padding:5.5rem 1.5rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-family:var(--font-m);font-size:.82rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue-main);margin-bottom:.8rem}
+.section-title{margin-bottom:1.25rem;color:var(--blue-deep)}
+.section-desc{font-size:1.05rem;color:var(--text-mid);max-width:650px;line-height:1.85}
+
+/* HERO */
+#home{min-height:100vh;background:var(--white);display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:5rem 1.5rem}
+.hero-geo{position:absolute;inset:0;pointer-events:none}
+.hero-content{position:relative;z-index:2;max-width:860px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:var(--blue-pale);color:var(--blue-rich);padding:.35rem 1.1rem;border-radius:var(--pill);font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.75rem}
+.hero-title{font-size:clamp(3.5rem,9vw,7rem);font-weight:700;color:var(--blue-deep);letter-spacing:-3px;line-height:.95;margin-bottom:.5rem}
+.hero-tagline{font-family:var(--font-d);font-style:italic;font-size:clamp(1.1rem,3vw,1.65rem);color:var(--text-muted);letter-spacing:.5px;margin-bottom:2.5rem}
+.hero-quotes{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2.5rem;text-align:left}
+.hero-quote{background:var(--bg);border-left:3px solid var(--blue-soft);padding:1.1rem 1.5rem;border-radius:0 var(--r) var(--r) 0}
+.hero-quote q{font-family:var(--font-d);font-style:italic;font-size:1.1rem;color:var(--text);line-height:1.6;display:block;margin-bottom:.3rem}
+.hero-quote cite{font-size:.78rem;color:var(--text-muted);letter-spacing:.5px}
+.hero-actions{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
+
+/* FACILITY */
+#facility{background:var(--white)}
+.facility-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin:2.5rem 0}
+.facility-card{background:var(--bg);border:1px solid var(--blue-pale);border-radius:var(--r);padding:1.4rem;transition:all .25s}
+.facility-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md);border-color:var(--blue-soft)}
+.facility-icon{font-size:1.8rem;margin-bottom:.7rem}
+.facility-card h4{font-size:1rem;color:var(--blue-deep);margin-bottom:.3rem}
+.facility-card p{font-size:.85rem;line-height:1.5}
+.tier-section{margin-top:3.5rem}
+.tier-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.75rem}
+.tier-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.tier-card{border-radius:var(--r-lg);padding:2rem;position:relative;overflow:hidden;text-align:center;transition:transform .25s}
+.tier-card:hover{transform:translateY(-4px)}
+.tier-apex{background:linear-gradient(135deg,var(--blue-deep),var(--blue-rich));color:#fff}
+.tier-vertex{background:linear-gradient(135deg,var(--blue-rich),var(--blue-main));color:#fff}
+.tier-vector{background:linear-gradient(135deg,var(--blue-main),var(--blue-soft));color:var(--navy)}
+.tier-card h3{font-size:1.8rem;margin-bottom:.3rem}
+.tier-card .tier-score{font-family:var(--font-m);font-size:.75rem;letter-spacing:2px;opacity:.8;margin-bottom:1rem}
+.tier-card .tier-price{font-family:var(--font-d);font-size:1.1rem;font-style:italic;opacity:.9}
+.tier-card .tier-spot{font-family:var(--font-m);font-size:.7rem;margin-top:.5rem;opacity:.75}
+.tier-deco{position:absolute;right:-20px;bottom:-20px;width:100px;height:100px;border:20px solid rgba(255,255,255,.08);border-radius:50%}
+
+/* SPRING DRILLS LANDING */
+#springdrills{background:var(--bg)}
+.drills-landing-inner{display:flex;align-items:center;gap:3rem;flex-wrap:wrap}
+.drills-text{flex:1;min-width:280px}
+.drills-visual{flex:1;min-width:280px;display:flex;justify-content:center}
+.drills-card-visual{background:white;border:1px solid var(--blue-pale);border-radius:var(--r-lg);padding:2rem;width:100%;max-width:380px;box-shadow:var(--sh-md)}
+.drill-stat-row{display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.drill-stat{flex:1;min-width:80px;text-align:center;background:var(--bg);border-radius:var(--r);padding:.8rem .5rem}
+.drill-stat .s-val{font-family:var(--font-m);font-size:1.3rem;color:var(--blue-deep);font-weight:700}
+.drill-stat .s-lbl{font-size:.7rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-top:.2rem}
+.drill-preview-q{background:var(--bg);border-radius:var(--r);padding:1rem;font-size:.85rem;color:var(--text);border-left:3px solid var(--blue-main)}
+
+/* MONTHLY RACE */
+#monthlyrace{background:var(--white);position:relative;overflow:hidden}
+.race-bg-deco{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.race-header-block{text-align:center;margin-bottom:3rem}
+.race-timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;position:relative}
+.race-timeline::before{content:'';position:absolute;top:28px;left:5%;right:5%;height:2px;background:linear-gradient(90deg,var(--blue-pale),var(--blue-main),var(--blue-pale));z-index:0}
+.race-step{background:var(--white);border:1.5px solid var(--blue-pale);border-radius:var(--r-lg);padding:1.75rem 1.25rem;text-align:center;position:relative;z-index:1;transition:all .25s}
+.race-step:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:var(--blue-soft)}
+.race-step-num{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:var(--font-d);font-size:1.5rem;font-weight:700}
+.rs-1{background:var(--blue-pale);color:var(--blue-deep)}
+.rs-2{background:var(--blue-main);color:#fff}
+.rs-3{background:var(--blue-rich);color:#fff}
+.rs-4{background:var(--blue-deep);color:#fff}
+.race-step h4{color:var(--blue-deep);font-size:1.1rem;margin-bottom:.5rem}
+.race-step p{font-size:.88rem;line-height:1.5}
+.race-desc-box{background:linear-gradient(135deg,var(--blue-pale),var(--bg));border:1px solid var(--blue-soft);border-radius:var(--r-lg);padding:2rem;margin-bottom:3rem}
+.race-desc-box p{color:var(--text);font-size:1rem;line-height:1.85}
+
+/* BLACK PROBLEM */
+#blackproblem{background:var(--black-bg);color:#fff;padding:5.5rem 1.5rem;position:relative;overflow:hidden}
+.bp-inner{max-width:1100px;margin:0 auto}
+.bp-bg-deco{position:absolute;inset:0;pointer-events:none}
+.bp-header{text-align:center;margin-bottom:3rem;position:relative;z-index:2}
+.bp-header h2{color:#fff;font-size:clamp(2rem,5vw,3.5rem)}
+.bp-header .bp-sub{font-family:var(--font-d);font-style:italic;color:rgba(255,255,255,.55);font-size:1.1rem;margin-top:.5rem}
+.bp-header .bp-desc{color:rgba(255,255,255,.75);font-size:1rem;max-width:640px;margin:1.25rem auto 0;line-height:1.85}
+.bp-timer-block{text-align:center;margin:2.5rem 0;position:relative;z-index:2}
+.bp-timer-label{font-family:var(--font-m);font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.75rem}
+.bp-timer{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.bp-time-unit{text-align:center}
+.bp-time-num{font-family:var(--font-m);font-size:clamp(2.5rem,6vw,4rem);color:#fff;letter-spacing:-2px;line-height:1;display:block}
+.bp-time-lbl{font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase}
+.bp-sep{font-family:var(--font-m);font-size:2.5rem;color:rgba(255,255,255,.25);align-self:flex-start;padding-top:.1rem}
+.bp-content{position:relative;z-index:2}
+.bp-tabs{display:flex;justify-content:center;gap:.75rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.bp-tab{padding:.55rem 1.3rem;border-radius:var(--pill);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;border:1.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);background:transparent}
+.bp-tab.active,.bp-tab:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.35)}
+.bp-problem-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:2rem;margin-bottom:2.5rem}
+.bp-problem-box .bp-q-label{font-family:var(--font-m);font-size:.7rem;letter-spacing:2px;color:rgba(255,255,255,.4);text-transform:uppercase;margin-bottom:.75rem}
+.bp-problem-box p{color:rgba(255,255,255,.85);font-size:1rem;line-height:1.9}
+.bp-hof{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:2rem}
+.bp-hof-title{font-family:var(--font-d);font-size:1.5rem;color:var(--gold);margin-bottom:.3rem;text-align:center}
+.bp-hof-sub{font-size:.8rem;color:rgba(255,255,255,.4);text-align:center;margin-bottom:1.5rem;font-family:var(--font-m);letter-spacing:1px}
+.bp-hof-list{display:flex;flex-direction:column;gap:.75rem}
+.bp-survivor{display:flex;align-items:center;gap:1rem;padding:.9rem 1rem;background:rgba(255,255,255,.04);border-radius:var(--r)}
+.bp-survivor-rank{font-family:var(--font-m);font-size:1.2rem;color:var(--gold);width:2.5rem;flex-shrink:0;text-align:center}
+.bp-survivor-info{flex:1}
+.bp-survivor-info .sv-name{font-weight:600;color:#fff;font-size:.95rem}
+.bp-survivor-info .sv-school{font-size:.78rem;color:rgba(255,255,255,.45);margin-top:.1rem}
+.bp-survivor-time{font-family:var(--font-m);font-size:.75rem;color:var(--gold)}
+
+/* THE LEARNERS */
+#thelearners{background:var(--bg)}
+.learners-hero{text-align:center;margin-bottom:3.5rem}
+.learners-hero h2{font-size:clamp(2rem,5vw,3.5rem);color:var(--blue-deep)}
+.learners-hero .lh-sub{font-family:var(--font-d);font-style:italic;color:var(--blue-main);font-size:1.2rem;margin:0.5rem 0 1.5rem}
+.learners-hero .lh-desc{font-size:1rem;max-width:640px;margin:0 auto;line-height:1.85}
+.learners-benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin:2.5rem 0}
+.benefit-card{background:var(--white);border:1px solid var(--blue-pale);border-radius:var(--r-lg);padding:1.75rem;transition:all .25s}
+.benefit-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md)}
+.benefit-icon{font-size:2rem;margin-bottom:.75rem}
+.benefit-card h4{color:var(--blue-deep);margin-bottom:.4rem}
+.benefit-card p{font-size:.88rem;line-height:1.55}
+.learners-jenjang{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+.jenjang-card{background:linear-gradient(135deg,var(--blue-pale),var(--white));border:1.5px solid var(--blue-soft);border-radius:var(--r-lg);padding:1.5rem;text-align:center}
+.jenjang-card h4{color:var(--blue-deep);font-size:1.2rem;margin-bottom:.4rem}
+.jenjang-card p{font-size:.85rem}
+.learners-quote{background:linear-gradient(135deg,var(--blue-deep),var(--blue-rich));border-radius:var(--r-lg);padding:2.5rem;text-align:center;margin-top:2.5rem;color:#fff}
+.learners-quote q{font-family:var(--font-d);font-style:italic;font-size:1.4rem;line-height:1.5;color:#fff}
+.learners-quote cite{font-size:.8rem;color:rgba(255,255,255,.6);margin-top.8rem;display:block}
+
+/* COACHES */
+#ourcoach{background:var(--white);overflow:hidden}
+.coaches-track-wrap{overflow:hidden;padding:1rem 0;cursor:grab;position:relative}
+.coaches-track-wrap::before,.coaches-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:10;pointer-events:none}
+.coaches-track-wrap::before{left:0;background:linear-gradient(90deg,var(--white),transparent)}
+.coaches-track-wrap::after{right:0;background:linear-gradient(-90deg,var(--white),transparent)}
+.coaches-track{display:flex;gap:1.5rem;animation:scrollCoaches 32s linear infinite;width:max-content;padding:0.5rem 1rem}
+.coaches-track:hover{animation-play-state:paused}
+@keyframes scrollCoaches{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.coach-card{background:var(--bg);border:1px solid var(--blue-pale);border-radius:var(--r-lg);padding:1.75rem;width:260px;flex-shrink:0;text-align:center;transition:all .25s}
+.coach-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:var(--blue-soft)}
+.coach-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue-rich),var(--blue-main));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:var(--font-d);font-size:1.4rem;font-weight:700;color:#fff;letter-spacing:-1px}
+.coach-card h4{font-size:1.05rem;color:var(--blue-deep);margin-bottom:.2rem}
+.coach-title{font-size:.75rem;color:var(--blue-main);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:.75rem}
+.coach-spec{font-size:.85rem;color:var(--text);margin-bottom:.5rem;font-weight:500}
+.coach-edu{font-size:.78rem;color:var(--text-muted);line-height:1.4;margin-bottom:.5rem}
+.coach-achieve{font-size:.78rem;color:var(--blue-rich);font-style:italic;line-height:1.4}
+
+/* REGISTRATION LANDING */
+#registration{background:linear-gradient(135deg,var(--blue-deep),var(--navy));color:#fff;text-align:center}
+#registration .section-label{color:rgba(255,255,255,.5)}
+#registration h2{color:#fff;font-size:clamp(2rem,5vw,3.5rem)}
+#registration p{color:rgba(255,255,255,.7);max-width:540px;margin:1rem auto 2rem}
+
+/* FOOTER */
+footer{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;padding:2rem 1.5rem;font-size:.8rem}
+footer a{color:rgba(255,255,255,.6)}
+
+/* ========== OVERLAYS ========== */
+.overlay{position:fixed;inset:0;z-index:500;display:none;overflow-y:auto}
+.overlay.active{display:block}
+.overlay-bg{position:fixed;inset:0;background:rgba(7,24,36,.85);backdrop-filter:blur(4px)}
+
+/* === SPRING DRILLS QUIZ === */
+#drillsOverlay{background:var(--bg)}
+.quiz-header{background:var(--white);border-bottom:1px solid var(--blue-pale);padding:1rem 1.5rem;position:sticky;top:0;z-index:10}
+.quiz-header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.quiz-title{font-family:var(--font-d);font-size:1.6rem;color:var(--blue-deep);font-weight:700}
+.quiz-stats{display:flex;gap:1rem;flex-wrap:wrap}
+.q-stat{text-align:center;min-width:64px}
+.q-stat .qsv{font-family:var(--font-m);font-size:1.1rem;color:var(--blue-deep);font-weight:700}
+.q-stat .qsl{font-size:.65rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase}
+.quiz-body{max-width:760px;margin:2.5rem auto;padding:0 1.5rem 4rem}
+.drill-question{background:var(--white);border:1px solid var(--blue-pale);border-radius:var(--r-lg);padding:2rem;margin-bottom:1.75rem;transition:all .3s}
+.dq-meta{display:flex;gap:1rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap}
+.dq-num{font-family:var(--font-m);font-size:.75rem;color:var(--blue-main);font-weight:700}
+.dq-diff{display:flex;gap:3px}
+.dq-diff span{width:10px;height:10px;border-radius:2px;background:var(--blue-pale)}
+.dq-diff span.filled{background:var(--blue-rich)}
+.dq-materi{font-size:.75rem;background:var(--blue-pale);color:var(--blue-rich);padding:.2rem .7rem;border-radius:var(--pill);font-weight:600}
+.dq-soal{font-family:var(--font-d);font-size:1.15rem;color:var(--text);line-height:1.7;margin-bottom:1.25rem;white-space:pre-wrap}
+.dq-input{width:100%;min-height:80px;border:1.5px solid var(--blue-pale);border-radius:var(--r);padding:.9rem 1rem;font-family:var(--font-b);font-size:.95rem;color:var(--text);resize:vertical;transition:border-color .2s;background:var(--bg)}
+.dq-input:focus{outline:none;border-color:var(--blue-main)}
+.dq-submit{margin-top:.75rem}
+.dq-feedback{margin-top:1rem;padding:1rem 1.25rem;border-radius:var(--r);display:none}
+.dq-feedback.correct{background:#EAF7F4;border-left:4px solid var(--success);display:block}
+.dq-feedback.wrong{background:#FEF0F0;border-left:4px solid var(--error);display:block}
+.dq-feedback .fb-verdict{font-weight:700;font-size:.95rem;margin-bottom:.4rem}
+.dq-feedback .fb-verdict.ok{color:var(--success)}
+.dq-feedback .fb-verdict.no{color:var(--error)}
+.dq-feedback .fb-pembahasan{font-size:.88rem;color:var(--text);line-height:1.6}
+.drill-question.submitted .dq-input{background:#f8f8f8;pointer-events:none}
+
+/* === MODAL LOGIN === */
+#loginModal{position:fixed;inset:0;z-index:600;display:none;align-items:center;justify-content:center;padding:1.5rem}
+#loginModal.active{display:flex}
+.modal-bg{position:fixed;inset:0;background:rgba(7,24,36,.7);backdrop-filter:blur(4px)}
+.modal-box{background:var(--white);border-radius:var(--r-lg);padding:2.5rem;width:100%;max-width:440px;position:relative;z-index:1;box-shadow:var(--sh-lg)}
+.modal-close{position:absolute;top:1.1rem;right:1.1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-muted);line-height:1}
+.modal-title{font-family:var(--font-d);font-size:2rem;color:var(--blue-deep);margin-bottom.3rem;margin-bottom:.25rem}
+.modal-sub{font-size:.88rem;color:var(--text-muted);margin-bottom:2rem}
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:.4rem;letter-spacing:.3px}
+.form-control{width:100%;padding:.7rem 1rem;border:1.5px solid var(--blue-pale);border-radius:var(--r);font-family:var(--font-b);font-size:.9rem;color:var(--text);transition:border-color .2s;background:var(--bg)}
+.form-control:focus{outline:none;border-color:var(--blue-main)}
+select.form-control{cursor:pointer}
+.form-full{width:100%}
+.modal-divider{text-align:center;color:var(--text-muted);font-size:.8rem;margin:1rem 0;position:relative}
+.modal-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--blue-pale)}
+.modal-divider span{background:#fff;padding:0 .75rem;position:relative}
+
+/* === REGISTRATION OVERLAY === */
+#regOverlay{background:var(--bg)}
+.reg-header{background:var(--white);border-bottom:1px solid var(--blue-pale);padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.reg-logo{font-family:var(--font-d);font-size:1.4rem;font-weight:700;color:var(--blue-deep)}
+.step-indicators{display:flex;gap:.5rem;align-items:center}
+.step-dot{width:10px;height:10px;border-radius:50%;background:var(--blue-pale);transition:all .3s}
+.step-dot.active{background:var(--blue-rich);width:28px;border-radius:var(--pill)}
+.step-dot.done{background:var(--success)}
+.reg-body{max-width:600px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
+.reg-step{display:none}
+.reg-step.active{display:block}
+.reg-step-title{font-family:var(--font-d);font-size:2.2rem;color:var(--blue-deep);margin-bottom:.3rem}
+.reg-step-sub{font-size:.9rem;color:var(--text-muted);margin-bottom:2rem;line-height:1.6}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.email-verify-box{text-align:center;padding:2rem 0}
+.ev-icon{font-size:4rem;margin-bottom:1rem}
+.ev-title{font-family:var(--font-d);font-size:1.8rem;color:var(--blue-deep);margin-bottom:.5rem}
+.ev-desc{color:var(--text-muted);font-size:.9rem;line-height:1.7;margin-bottom:2rem}
+.ev-code-row{display:flex;gap:.5rem;justify-content:center;margin-bottom:1.5rem}
+.ev-code-input{width:50px;height:56px;border:2px solid var(--blue-pale);border-radius:var(--r);text-align:center;font-family:var(--font-m);font-size:1.3rem;color:var(--blue-deep);transition:border-color .2s;background:var(--bg)}
+.ev-code-input:focus{outline:none;border-color:var(--blue-main)}
+
+/* SELECTION TEST */
+.test-header-box{background:var(--white);border:1px solid var(--blue-pale);border-radius:var(--r-lg);padding:1.5rem;margin-bottom:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.test-meta{display:flex;gap:2rem;flex-wrap:wrap}
+.test-meta-item .tm-label{font-size:.7rem;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;font-family:var(--font-m)}
+.test-meta-item .tm-val{font-family:var(--font-d);font-size:1.1rem;color:var(--blue-deep);font-weight:600}
+.test-timer{font-family:var(--font-m);font-size:2rem;color:var(--blue-rich);font-weight:700}
+.test-q{background:var(--white);border:1px solid var(--blue-pale);border-radius:var(--r-lg);padding:1.75rem;margin-bottom:1.25rem}
+.test-q-num{font-family:var(--font-m);font-size:.72rem;color:var(--blue-main);margin-bottom:.75rem;letter-spacing:1.5px}
+.test-q-text{font-family:var(--font-d);font-size:1.1rem;color:var(--text);margin-bottom:1.25rem;line-height:1.6}
+.test-options{display:flex;flex-direction:column;gap:.6rem}
+.test-option{display:flex;align-items:flex-start;gap:.75rem;padding:.8rem 1rem;border:1.5px solid var(--blue-pale);border-radius:var(--r);cursor:pointer;transition:all .2s}
+.test-option:hover{background:var(--blue-pale);border-color:var(--blue-soft)}
+.test-option.selected{background:var(--blue-pale);border-color:var(--blue-main)}
+.test-option.correct-ans{background:#EAF7F4;border-color:var(--success)}
+.test-option.wrong-ans{background:#FEF0F0;border-color:var(--error)}
+.test-option input[type=radio]{margin-top:2px;accent-color:var(--blue-rich);flex-shrink:0}
+.test-option span{font-size:.9rem;color:var(--text)}
+
+/* RESULT PAGE */
+.result-box{text-align:center;padding:2rem 0}
+.result-score{font-family:var(--font-d);font-size:6rem;font-weight:700;line-height:1;margin-bottom:.5rem}
+.result-score.apex{color:var(--blue-deep)}
+.result-score.vertex{color:var(--blue-rich)}
+.result-score.vector{color:var(--blue-main)}
+.result-score.fail{color:var(--error)}
+.result-kelas{font-family:var(--font-d);font-size:1.6rem;margin-bottom:.5rem}
+.result-msg{color:var(--text-muted);font-size:.95rem;max-width:440px;margin:0 auto 2rem;line-height:1.7}
+.result-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.5rem;border-radius:var(--pill);font-weight:700;font-size:1rem;margin-bottom:1.5rem}
+.rb-apex{background:var(--blue-deep);color:#fff}
+.rb-vertex{background:var(--blue-rich);color:#fff}
+.rb-vector{background:var(--blue-main);color:#fff}
+.rb-fail{background:#fde8e8;color:var(--error)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .header-actions .btn-secondary{display:none}
+  .tier-cards{grid-template-columns:1fr}
+  .learners-jenjang{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .race-timeline::before{display:none}
+  .bp-timer{gap:.75rem}
+}
+@media(max-width:480px){
+  .drills-landing-inner{flex-direction:column}
+  .quiz-stats{gap:.5rem}
+  .test-meta{gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo-block" onclick="scrollToSection('home')" href="#">
+      <div class="logo-mark">
+        <svg width="44" height="44" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="160" cy="148" r="108" fill="#E0F2FB" opacity="0.7"/>
+          <path d="M 70,148 A 90,90 0 1 1 250,148" fill="none" stroke="#90C8E8" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 160,52 C 185,52 212,72 218,100 C 226,136 212,162 190,178 C 176,188 168,195 160,230 C 152,195 144,188 130,178 C 108,162 94,136 102,100 C 108,72 135,52 160,52 Z" fill="#2E8FC0"/>
+          <path d="M 160,72 C 176,72 194,84 198,106 C 203,132 192,153 176,164 C 167,170 162,176 160,200 C 158,176 153,170 144,164 C 128,153 117,132 122,106 C 126,84 144,72 160,72 Z" fill="#5AAED6"/>
+          <ellipse cx="160" cy="115" rx="18" ry="26" fill="#A0D8EF"/>
+          <path d="M 115,108 C 92,96 75,108 68,130 C 62,150 72,170 88,175" fill="none" stroke="#2E8FC0" stroke-width="5" stroke-linecap="round"/>
+          <path d="M 110,125 C 88,120 72,135 70,155" fill="none" stroke="#5AAED6" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 108,145 C 92,145 80,156 80,170" fill="none" stroke="#8DCBEA" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M 205,108 C 228,96 245,108 252,130 C 258,150 248,170 232,175" fill="none" stroke="#2E8FC0" stroke-width="5" stroke-linecap="round"/>
+          <path d="M 210,125 C 232,120 248,135 250,155" fill="none" stroke="#5AAED6" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 212,145 C 228,145 240,156 240,170" fill="none" stroke="#8DCBEA" stroke-width="2.5" stroke-linecap="round"/>
+          <ellipse cx="147" cy="44" rx="5" ry="7" fill="#5AAED6" opacity="0.9"/>
+          <ellipse cx="173" cy="44" rx="5" ry="7" fill="#5AAED6" opacity="0.9"/>
+          <ellipse cx="160" cy="33" rx="6" ry="8" fill="#2E8FC0"/>
+          <circle cx="135" cy="40" r="3.5" fill="#8DCBEA" opacity="0.85"/>
+          <circle cx="185" cy="40" r="3.5" fill="#8DCBEA" opacity="0.85"/>
+          <circle cx="123" cy="52" r="2.5" fill="#A0D8EF" opacity="0.8"/>
+          <circle cx="197" cy="52" r="2.5" fill="#A0D8EF" opacity="0.8"/>
+          <ellipse cx="160" cy="238" rx="52" ry="10" fill="none" stroke="#5AAED6" stroke-width="2" opacity="0.6"/>
+          <ellipse cx="160" cy="242" rx="70" ry="13" fill="none" stroke="#8DCBEA" stroke-width="1.5" opacity="0.45"/>
+          <ellipse cx="160" cy="246" rx="90" ry="16" fill="none" stroke="#B8DCF0" stroke-width="1" opacity="0.35"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="l-name">HighSpring</div>
+        <div class="l-tag">A Place for Curious Minds</div>
+      </div>
+    </a>
+    <nav class="main-nav">
+      <div class="nav-tab" onclick="scrollToSection('facility')">Facility</div>
+      <div class="nav-tab" onclick="scrollToSection('springdrills')">Spring Drills</div>
+      <div class="nav-tab" onclick="scrollToSection('monthlyrace')">Monthly Race</div>
+      <div class="nav-tab" onclick="scrollToSection('thelearners')">The Learners</div>
+      <div class="nav-tab" onclick="scrollToSection('blackproblem')">Black Problem</div>
+      <div class="nav-tab" onclick="scrollToSection('ourcoach')">Our Coach</div>
+      <div class="nav-tab" onclick="openRegOverlay()">Registration</div>
+    </nav>
+    <div class="header-actions">
+      <button class="btn btn-secondary btn-sm" onclick="openLogin()">Login</button>
+      <button class="btn btn-primary btn-sm" onclick="openRegOverlay()">Daftar</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section id="home" class="section">
+  <!-- Geometric Decorations -->
+  <div class="hero-geo">
+    <svg width="100%" height="100%" viewBox="0 0 1400 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="opacity:.06">
+      <circle cx="100" cy="150" r="80" fill="none" stroke="#2C6FA8" stroke-width="2"/>
+      <circle cx="100" cy="150" r="50" fill="none" stroke="#2C6FA8" stroke-width="1"/>
+      <polygon points="1300,50 1380,200 1220,200" fill="none" stroke="#2C6FA8" stroke-width="2"/>
+      <rect x="50" y="400" width="100" height="100" fill="none" stroke="#2C6FA8" stroke-width="1.5" transform="rotate(15 100 450)"/>
+      <circle cx="1350" cy="550" r="120" fill="none" stroke="#2C6FA8" stroke-width="1.5"/>
+      <circle cx="1350" cy="550" r="80" fill="none" stroke="#2C6FA8" stroke-width="1"/>
+      <polygon points="700,30 750,110 650,110" fill="none" stroke="#5B9DC9" stroke-width="1.5"/>
+      <line x1="0" y1="200" x2="400" y2="200" stroke="#ACCFE7" stroke-width="1" stroke-dasharray="4,8"/>
+      <line x1="1000" y1="600" x2="1400" y2="600" stroke="#ACCFE7" stroke-width="1" stroke-dasharray="4,8"/>
+      <text x="200" y="700" font-family="Georgia" font-size="72" fill="#2C6FA8" opacity=".4">π</text>
+      <text x="1150" y="120" font-family="Georgia" font-size="60" fill="#2C6FA8" opacity=".4">∑</text>
+      <text x="550" y="750" font-family="Georgia" font-size="50" fill="#5B9DC9" opacity=".4">√</text>
+      <text x="80" y="650" font-family="Georgia" font-size="40" fill="#5B9DC9" opacity=".35">∫</text>
+      <circle cx="700" cy="400" r="200" fill="none" stroke="#ACCFE7" stroke-width="1" stroke-dasharray="6,12"/>
+      <rect x="620" y="320" width="160" height="160" fill="none" stroke="#ACCFE7" stroke-width="1" stroke-dasharray="4,8"/>
+      <line x1="620" y1="320" x2="780" y2="480" stroke="#ACCFE7" stroke-width="1" stroke-dasharray="3,7"/>
+      <line x1="780" y1="320" x2="620" y2="480" stroke="#ACCFE7" stroke-width="1" stroke-dasharray="3,7"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>✦</span> Lembaga Bimbingan Belajar Matematika
+    </div>
+    <h1 class="hero-title">HighSpring</h1>
+    <p class="hero-tagline">A Place for Curious Minds</p>
+    <div class="hero-quotes">
+      <div class="hero-quote">
+        <q>The beautiful thing about learning is that nobody can take it away from you.</q>
+        <cite>— B. B. King</cite>
+      </div>
+      <div class="hero-quote">
+        <q>Because to understand is to be free.</q>
+        <cite>— Baruch Spinoza</cite>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn btn-primary" onclick="openRegOverlay()">Daftar Sekarang →</button>
+      <button class="btn btn-secondary" onclick="openLogin()">Login</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FACILITY ===== -->
+<section id="facility" class="section" style="background:var(--white)">
+  <div class="section-inner">
+    <div class="section-label">Our Facility</div>
+    <h2 class="section-title">Lingkungan Belajar yang Mendukung</h2>
+    <p class="section-desc">Setiap detail dirancang agar siswa bisa fokus, nyaman, dan berkembang secara optimal.</p>
+    <div class="facility-grid">
+      <div class="facility-card"><div class="facility-icon">👥</div><h4>Kelas Kecil</h4><p>Maksimal 10 siswa per kelas untuk bimbingan yang lebih intensif dan personal.</p></div>
+      <div class="facility-card"><div class="facility-icon">❄️</div><h4>AC & Wi-Fi</h4><p>Ruangan ber-AC nyaman dilengkapi koneksi Wi-Fi untuk akses materi digital.</p></div>
+      <div class="facility-card"><div class="facility-icon">📖</div><h4>Modul Eksklusif</h4><p>Modul belajar khusus yang tersusun sistematis dan disesuaikan dengan kurikulum.</p></div>
+      <div class="facility-card"><div class="facility-icon">🅿️</div><h4>Area Parkir Luas</h4><p>Fasilitas parkir yang nyaman untuk kendaraan roda dua maupun roda empat.</p></div>
+      <div class="facility-card"><div class="facility-icon">🚿</div><h4>Toilet Bersih</h4><p>Toilet bersih dan terawat untuk kenyamanan siswa selama belajar.</p></div>
+      <div class="facility-card"><div class="facility-icon">🕌</div><h4>Musholla & Wudhu</h4><p>Fasilitas ibadah lengkap dengan tempat wudhu yang bersih dan memadai.</p></div>
+      <div class="facility-card"><div class="facility-icon">💬</div><h4>Free Consultation</h4><p>Konsultasi gratis mengenai perkembangan belajar kapan saja dibutuhkan.</p></div>
+      <div class="facility-card"><div class="facility-icon">📊</div><h4>Performance Report</h4><p>Laporan performa berkala agar orang tua bisa memantau perkembangan siswa.</p></div>
+      <div class="facility-card"><div class="facility-icon">🎓</div><h4>Personal Coach</h4><p>Setiap siswa didampingi personal coach yang memantau dan mendukung progress belajar.</p></div>
+    </div>
+
+    <!-- Jenjang -->
+    <div style="margin-top:2rem">
+      <div class="section-label" style="margin-bottom:.5rem">Jenjang Tersedia</div>
+      <p class="section-desc" style="margin-bottom:1.5rem">Tersedia untuk <strong>SD Kelas 1–6</strong>, <strong>SMP Kelas 7–9</strong>, dan <strong>SMA Kelas 10–12</strong>. Setiap jenjang memiliki 30 siswa yang terbagi dalam 3 kelas berdasarkan hasil seleksi.</p>
+    </div>
+
+    <!-- Tier System -->
+    <div class="tier-section">
+      <div class="tier-header">
+        <div>
+          <h3 style="color:var(--blue-deep)">Sistem Kelas Bertingkat</h3>
+          <p style="font-size:.9rem">Posisi kelas ditentukan melalui tes seleksi. <em>Get good grades and lower price at once!</em></p>
+        </div>
+        <div class="section-label" style="margin:0">10 siswa · 3 tingkatan</div>
+      </div>
+      <div class="tier-cards">
+        <div class="tier-card tier-apex">
+          <div class="tier-deco"></div>
+          <h3>Apex</h3>
+          <div class="tier-score">MIN SKOR 90</div>
+          <p style="color:rgba(255,255,255,.8);font-size:.9rem;line-height:1.6">Level tertinggi. Siswa terbaik mendapatkan lingkungan paling ambisius dengan harga paling terjangkau.</p>
+          <div class="tier-price">Harga Terendah 🏆</div>
+          <div class="tier-spot">10 siswa per jenjang</div>
+        </div>
+        <div class="tier-card tier-vertex">
+          <div class="tier-deco"></div>
+          <h3>Vertex</h3>
+          <div class="tier-score">MIN SKOR 80</div>
+          <p style="color:rgba(255,255,255,.8);font-size:.9rem;line-height:1.6">Level menengah. Lingkungan kompetitif untuk mendorong siswa mencapai Apex bulan depan.</p>
+          <div class="tier-price">Harga Menengah ⭐</div>
+          <div class="tier-spot">10 siswa per jenjang</div>
+        </div>
+        <div class="tier-card tier-vector">
+          <div class="tier-deco"></div>
+          <h3>Vector</h3>
+          <div class="tier-score">MIN SKOR 70</div>
+          <p style="color:rgba(13,43,69,.7);font-size:.9rem;line-height:1.6">Level dasar. Fondasi yang kuat untuk naik tingkat setiap Monthly Race.</p>
+          <div class="tier-price" style="color:var(--navy)">Harga Standar ✨</div>
+          <div class="tier-spot" style="color:rgba(13,43,69,.6)">10 siswa per jenjang</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SPRING DRILLS ===== -->
+<section id="springdrills" class="section">
+  <div class="section-inner">
+    <div class="drills-landing-inner">
+      <div class="drills-text">
+        <div class="section-label">Daily Challenge</div>
+        <h2 class="section-title">Spring Drills</h2>
+        <p class="section-desc" style="margin-bottom:1.5rem">Kerjakan soal setiap hari untuk melatih konsistensi dan ketajamanmu. Streak yang panjang mencerminkan karakter yang kuat.</p>
+        <button class="btn btn-primary" onclick="openDrills()">Try It Now! →</button>
+      </div>
+      <div class="drills-visual">
+        <div class="drills-card-visual">
+          <div class="drill-stat-row">
+            <div class="drill-stat"><div class="qsv">🔥 0</div><div class="qsl">Streak</div></div>
+            <div class="drill-stat"><div class="qsv">0/3</div><div class="qsl">Hari Ini</div></div>
+            <div class="drill-stat"><div class="qsv">0</div><div class="qsl">Total ✓</div></div>
+            <div class="drill-stat"><div class="qsv">#–</div><div class="qsl">Rank</div></div>
+          </div>
+          <div class="drill-preview-q">
+            <strong style="font-size:.72rem;color:var(--blue-main);letter-spacing:1px">SOAL 1 · ALJABAR · ⬛⬜⬜⬜⬜</strong><br><br>
+            Jika 3x + 7 = 22, tentukan nilai x...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MONTHLY RACE ===== -->
+<section id="monthlyrace" class="section" style="background:var(--white);position:relative;overflow:hidden">
+  <!-- bg deco -->
+  <svg style="position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;pointer-events:none;opacity:.04" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="0,0 200,0 0,200" fill="#2C6FA8"/>
+    <polygon points="1400,700 1200,700 1400,500" fill="#2C6FA8"/>
+    <circle cx="700" cy="350" r="300" fill="none" stroke="#5B9DC9" stroke-width="3" stroke-dasharray="8,16"/>
+    <circle cx="700" cy="350" r="200" fill="none" stroke="#ACCFE7" stroke-width="2" stroke-dasharray="4,12"/>
+    <line x1="0" y1="350" x2="1400" y2="350" stroke="#ACCFE7" stroke-width="1" stroke-dasharray="5,15"/>
+  </svg>
+  <div class="section-inner" style="position:relative;z-index:2">
+    <div class="race-header-block">
+      <div class="section-label">Evaluasi Bulanan</div>
+      <h2 class="section-title" style="text-align:center">Monthly Race</h2>
+      <p style="font-family:var(--font-d);font-style:italic;font-size:1.3rem;color:var(--blue-main);text-align:center;margin-bottom:1.5rem">Pemetaan Ulang Setiap Bulan</p>
+    </div>
+    <div class="race-desc-box">
+      <p>Setiap akhir bulan, performa siswa di setiap jenjang akan dievaluasi ulang melalui <strong>Monthly Race</strong> — ujian komprehensif yang menentukan posisi kelas dan biaya bulan berikutnya.</p>
+      <br>
+      <p>Setiap siswa mendapat <strong>kesempatan yang sama</strong> untuk berada pada lingkungan ambisius dengan harga yang lebih murah. Buktikan kemampuanmu dan raih posisi Apex!</p>
+    </div>
+    <div class="race-timeline">
+      <div class="race-step">
+        <div class="race-step-num rs-1">1–3</div>
+        <h4>Minggu 1–3</h4>
+        <p>Materi dan Spring Drills harian berjalan normal. Saatnya menyerap ilmu sebanyak-banyaknya.</p>
+      </div>
+      <div class="race-step">
+        <div class="race-step-num rs-2">4</div>
+        <h4>Minggu 4</h4>
+        <p>Monthly Race sesuai jenjang dan materi yang telah diajarkan. Tunjukkan yang terbaik!</p>
+      </div>
+      <div class="race-step">
+        <div class="race-step-num rs-3">🏁</div>
+        <h4>Akhir Bulan</h4>
+        <p>Pengumuman kelas & harga baru bulan depan berdasarkan hasil Monthly Race.</p>
+      </div>
+      <div class="race-step">
+        <div class="race-step-num rs-4">✦</div>
+        <h4>Bulan Baru</h4>
+        <p>Fresh start dengan posisi yang kamu raih. Posisi baru, semangat baru!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLACK PROBLEM ===== -->
+<section id="blackproblem" class="section" style="background:var(--black-bg);padding:5.5rem 1.5rem;position:relative;overflow:hidden">
+  <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.06" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="700,50 900,400 500,400" fill="none" stroke="#5B9DC9" stroke-width="2"/>
+    <circle cx="700" cy="250" r="200" fill="none" stroke="#ACCFE7" stroke-width="1"/>
+    <circle cx="200" cy="600" r="150" fill="none" stroke="#5B9DC9" stroke-width="1"/>
+    <circle cx="1200" cy="100" r="120" fill="none" stroke="#5B9DC9" stroke-width="1"/>
+    <rect x="50" y="50" width="200" height="200" fill="none" stroke="#ACCFE7" stroke-width="1" transform="rotate(20 150 150)"/>
+    <rect x="1150" y="450" width="180" height="180" fill="none" stroke="#ACCFE7" stroke-width="1" transform="rotate(-15 1240 540)"/>
+  </svg>
+  <div class="bp-inner">
+    <div class="bp-header">
+      <div class="section-label" style="color:rgba(255,255,255,.35)">Monthly Challenge</div>
+      <h2>The Black Problem</h2>
+      <div class="bp-sub">Untuk Mereka yang Berani Mencoba</div>
+      <p class="bp-desc">Setiap bulan, satu soal yang tidak biasa. Tiga hari untuk menaklukkannya. Tidak ada petunjuk. Tidak ada jalan pintas. Hanya kamu dan The Black Problem selama <strong style="color:var(--gold)">72 jam</strong>.</p>
+    </div>
+
+    <div class="bp-timer-block">
+      <div class="bp-timer-label">Waktu Tersisa</div>
+      <div class="bp-timer">
+        <div class="bp-time-unit"><span class="bp-time-num" id="bpH">71</span><span class="bp-time-lbl">Jam</span></div>
+        <div class="bp-sep">:</div>
+        <div class="bp-time-unit"><span class="bp-time-num" id="bpM">59</span><span class="bp-time-lbl">Menit</span></div>
+        <div class="bp-sep">:</div>
+        <div class="bp-time-unit"><span class="bp-time-num" id="bpS">59</span><span class="bp-time-lbl">Detik</span></div>
+      </div>
+    </div>
+
+    <div class="bp-content">
+      <div class="bp-tabs">
+        <div class="bp-tab active" onclick="setBPTab('SD',this)">SD</div>
+        <div class="bp-tab" onclick="setBPTab('SMP',this)">SMP</div>
+        <div class="bp-tab" onclick="setBPTab('SMA',this)">SMA</div>
+      </div>
+
+      <div id="bpProblemBox" class="bp-problem-box">
+        <div class="bp-q-label">The Black Problem · Juni 2026 · SD</div>
+        <p id="bpProblemText">Seekor siput berada di dasar sumur sedalam 12 meter. Setiap siang, siput naik 3 meter. Setiap malam, siput turun 2 meter. Namun, pada hari ke-5 dan kelipatannya, siput terlalu lelah sehingga tidak naik sama sekali di siang hari dan turun 1 meter di malam hari. Pada hari ke berapa siput pertama kali mencapai permukaan?</p>
+      </div>
+
+      <div class="bp-hof">
+        <div class="bp-hof-title">⚡ Hall of Fame</div>
+        <div class="bp-hof-sub" id="bpHofSub">THE SURVIVORS — SD</div>
+        <div class="bp-hof-list" id="bpHofList">
+          <div class="bp-survivor">
+            <div class="bp-survivor-rank">🥇</div>
+            <div class="bp-survivor-info"><div class="sv-name">Aditya Ramadhan</div><div class="sv-school">SDN 5 Surabaya · Mei 2026</div></div>
+            <div class="bp-survivor-time">14j 23m</div>
+          </div>
+          <div class="bp-survivor">
+            <div class="bp-survivor-rank">🥈</div>
+            <div class="bp-survivor-info"><div class="sv-name">Salsabila Putri</div><div class="sv-school">SD Petra 5 · April 2026</div></div>
+            <div class="bp-survivor-time">31j 17m</div>
+          </div>
+          <div class="bp-survivor">
+            <div class="bp-survivor-rank">🥉</div>
+            <div class="bp-survivor-info"><div class="sv-name">Mikael Tanaka</div><div class="sv-school">SD Al-Hikmah · Maret 2026</div></div>
+            <div class="bp-survivor-time">58j 44m</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== THE LEARNERS ===== -->
+<section id="thelearners" class="section">
+  <div class="section-inner">
+    <div class="learners-hero">
+      <div class="section-label" style="text-align:center">Program Eksklusif</div>
+      <h2>Selamat Datang,<br><em style="color:var(--blue-main);font-style:italic">The Learners</em></h2>
+      <div class="lh-sub" style="font-family:var(--font-d);font-style:italic;color:var(--blue-main);font-size:1.2rem;margin:.75rem 0 1.25rem">Bukan soal nilai. Ini adalah perjalanan mencari komunitas.</div>
+      <p class="lh-desc" style="max-width:650px;margin:0 auto;line-height:1.85">Setiap pertengahan semester, <strong>5 siswa terbaik</strong> dari setiap jenjang dipilih dan diundang menjadi The Learners. The Learners tidak hanya belajar materi ujian sekolah — mereka menyelami materi olimpiade, problem-solving tingkat lanjut, dan menemukan sesama orang yang <em>genuinely enjoy math</em>.</p>
+    </div>
+
+    <div class="learners-benefits">
+      <div class="benefit-card">
+        <div class="benefit-icon">🏆</div>
+        <h4>Materi Olimpiade</h4>
+        <p>Soal-soal OSN, IMAS, AMC, dan kompetisi matematika internasional lainnya.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🤝</div>
+        <h4>Komunitas Sesama Pecinta Math</h4>
+        <p>Bertemu orang-orang yang punya semangat yang sama. Diskusi tanpa batas.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🧠</div>
+        <h4>Intensive Discussion</h4>
+        <p>Sesi diskusi mendalam yang melatih cara berpikir, bukan sekadar hafalan rumus.</p>
+      </div>
+    </div>
+
+    <div class="learners-jenjang">
+      <div class="jenjang-card">
+        <h4>🏫 SD</h4>
+        <p>Diambil 5 siswa terbaik dari <strong>Kelas 4 & 5</strong></p>
+      </div>
+      <div class="jenjang-card">
+        <h4>🏫 SMP</h4>
+        <p>Diambil 5 siswa terbaik dari <strong>Kelas 7 & 8</strong></p>
+      </div>
+      <div class="jenjang-card">
+        <h4>🏫 SMA</h4>
+        <p>Diambil 5 siswa terbaik dari <strong>Kelas 10 & 11</strong></p>
+      </div>
+    </div>
+
+    <div class="learners-quote">
+      <q>"Kami tidak mencari siswa yang sudah pintar. Kami mencari yang punya rasa ingin tahu yang tak bisa dihentikan."</q>
+      <cite style="display:block;margin-top:.75rem;opacity:.65">— HighSpring Academy</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OUR COACH ===== -->
+<section id="ourcoach" class="section" style="background:var(--white)">
+  <div class="section-inner" style="margin-bottom:2.5rem">
+    <div class="section-label">Meet The Team</div>
+    <h2 class="section-title">Our Coach</h2>
+    <p class="section-desc">Setiap coach adalah akademisi berprestasi yang berdedikasi mendampingi perjalanan belajarmu secara personal.</p>
+  </div>
+  <div class="coaches-track-wrap">
+    <div class="coaches-track" id="coachTrack">
+      <!-- Cards generated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===== REGISTRATION LANDING ===== -->
+<section id="registration" class="section" style="background:linear-gradient(135deg,var(--blue-deep),var(--navy));color:#fff;text-align:center">
+  <div class="section-inner">
+    <div class="section-label" style="color:rgba(255,255,255,.45)">Mulai Perjalananmu</div>
+    <h2 style="color:#fff;font-size:clamp(2rem,5vw,3.5rem);margin-bottom:.75rem">Siap untuk <em>Berkembang</em>?</h2>
+    <p style="color:rgba(255,255,255,.65);max-width:520px;margin:0 auto 2.25rem;font-size:1.05rem;line-height:1.85">Daftarkan dirimu sekarang dan ikuti tes seleksi untuk menentukan kelasmu. Perjalanan seribu mil dimulai dari satu langkah.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-gold" onclick="openRegOverlay()">Daftar Sekarang →</button>
+      <button class="btn btn-ghost" onclick="openLogin()">Sudah Punya Akun</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:.4rem;font-family:var(--font-d);font-size:1rem;color:rgba(255,255,255,.7)">HighSpring — A Place for Curious Minds</p>
+  <p>© 2026 HighSpring Academy · Surabaya, Jawa Timur</p>
+</footer>
+
+<!-- ======================================= -->
+<!-- SPRING DRILLS OVERLAY -->
+<!-- ======================================= -->
+<div id="drillsOverlay" class="overlay">
+  <div class="quiz-header">
+    <div class="quiz-header-inner">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <button class="btn btn-secondary btn-sm" onclick="closeDrills()">← Kembali</button>
+        <div class="quiz-title">Spring Drills</div>
+      </div>
+      <div class="quiz-stats">
+        <div class="q-stat"><div class="qsv" id="dsStreak">🔥 0</div><div class="qsl">Streak</div></div>
+        <div class="q-stat"><div class="qsv" id="dsDaily">0/3</div><div class="qsl">Hari Ini</div></div>
+        <div class="q-stat"><div class="qsv" id="dsTotal">0</div><div class="qsl">Total ✓</div></div>
+        <div class="q-stat"><div class="qsv" id="dsRank">#–</div><div class="qsl">Rank</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="quiz-body" id="quizBody"></div>
+</div>
+
+<!-- ======================================= -->
+<!-- LOGIN MODAL -->
+<!-- ======================================= -->
+<div id="loginModal">
+  <div class="modal-bg" onclick="closeLogin()"></div>
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeLogin()">✕</button>
+    <h2 class="modal-title">Login</h2>
+    <p class="modal-sub">Selamat datang kembali di HighSpring.</p>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" class="form-control" placeholder="nama@email.com">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" class="form-control" placeholder="••••••••">
+    </div>
+    <button class="btn btn-primary form-full" style="width:100%;justify-content:center" onclick="closeLogin()">Masuk</button>
+    <div class="modal-divider"><span>atau</span></div>
+    <button class="btn btn-secondary form-full" style="width:100%;justify-content:center" onclick="closeLogin();openRegOverlay()">Daftar Akun Baru</button>
+  </div>
+</div>
+
+<!-- ======================================= -->
+<!-- REGISTRATION OVERLAY -->
+<!-- ======================================= -->
+<div id="regOverlay" class="overlay">
+  <div class="reg-header">
+    <div class="reg-logo">HighSpring</div>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <div class="step-indicators">
+        <div class="step-dot active" id="sd1"></div>
+        <div class="step-dot" id="sd2"></div>
+        <div class="step-dot" id="sd3"></div>
+        <div class="step-dot" id="sd4"></div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="closeRegOverlay()">✕</button>
+    </div>
+  </div>
+  <div class="reg-body">
+
+    <!-- STEP 1: FORM -->
+    <div class="reg-step active" id="regStep1">
+      <h2 class="reg-step-title">Formulir Pendaftaran</h2>
+      <p class="reg-step-sub">Isi data diri dengan lengkap dan benar. Pastikan email aktif untuk verifikasi.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nama Lengkap *</label>
+          <input type="text" class="form-control" id="regNama" placeholder="Nama Lengkapmu">
+        </div>
+        <div class="form-group">
+          <label>Asal Sekolah *</label>
+          <input type="text" class="form-control" id="regSekolah" placeholder="Nama Sekolah">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Jenjang Kelas *</label>
+        <select class="form-control" id="regKelas">
+          <option value="">-- Pilih Kelas --</option>
+          <option>Kelas 1 SD</option><option>Kelas 2 SD</option><option>Kelas 3 SD</option>
+          <option>Kelas 4 SD</option><option>Kelas 5 SD</option><option>Kelas 6 SD</option>
+          <option>Kelas 7 SMP</option><option>Kelas 8 SMP</option><option>Kelas 9 SMP</option>
+          <option>Kelas 10 SMA</option><option>Kelas 11 SMA</option><option>Kelas 12 SMA</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Alamat *</label>
+        <input type="text" class="form-control" id="regAlamat" placeholder="Alamat Lengkap">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nomor Telepon *</label>
+          <input type="tel" class="form-control" id="regTelp" placeholder="08xxxxxxxxxx">
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" class="form-control" id="regEmail" placeholder="email@aktif.com">
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:.5rem" onclick="goRegStep(2)">Lanjutkan →</button>
+    </div>
+
+    <!-- STEP 2: EMAIL VERIFY -->
+    <div class="reg-step" id="regStep2">
+      <div class="email-verify-box">
+        <div class="ev-icon">📬</div>
+        <h2 class="ev-title">Verifikasi Email</h2>
+        <p class="ev-desc">Kami telah mengirimkan kode verifikasi ke <strong id="evEmailDisplay">email kamu</strong>. Masukkan 6 digit kode di bawah ini.</p>
+        <div class="ev-code-row">
+          <input type="text" class="ev-code-input" maxlength="1" oninput="evNext(this,1)">
+          <input type="text" class="ev-code-input" maxlength="1" oninput="evNext(this,2)">
+          <input type="text" class="ev-code-input" maxlength="1" oninput="evNext(this,3)">
+          <input type="text" class="ev-code-input" maxlength="1" oninput="evNext(this,4)">
+          <input type="text" class="ev-code-input" maxlength="1" oninput="evNext(this,5)">
+          <input type="text" class="ev-code-input" maxlength="1" oninput="evNext(this,6)">
+        </div>
+        <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:1.5rem">Tidak menerima email? <a href="#" onclick="return false" style="color:var(--blue-rich)">Kirim ulang</a></p>
+        <button class="btn btn-primary" onclick="goRegStep(3)">Verifikasi & Lanjut →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: SELECTION TEST -->
+    <div class="reg-step" id="regStep3">
+      <div class="test-header-box">
+        <div class="test-meta">
+          <div class="test-meta-item">
+            <div class="tm-label">Nama</div>
+            <div class="tm-val" id="testNama">–</div>
+          </div>
+          <div class="test-meta-item">
+            <div class="tm-label">Tanggal</div>
+            <div class="tm-val" id="testTanggal">–</div>
+          </div>
+          <div class="test-meta-item">
+            <div class="tm-label">Jenjang</div>
+            <div class="tm-val" id="testJenjang">–</div>
+          </div>
+        </div>
+        <div class="test-timer" id="testTimer">20:00</div>
+      </div>
+      <h2 style="font-family:var(--font-d);font-size:1.6rem;color:var(--blue-deep);margin-bottom:.3rem">Tes Seleksi</h2>
+      <p style="font-size:.88rem;color:var(--text-muted);margin-bottom:2rem">Jawab semua soal dengan cermat. Klik <strong>Submit Jawaban</strong> setelah selesai.</p>
+      <div id="testQuestions"></div>
+      <button class="btn btn-primary" id="testSubmitBtn" style="width:100%;justify-content:center;margin-top:1rem" onclick="submitTest()">Submit Jawaban →</button>
+    </div>
+
+    <!-- STEP 4: RESULT -->
+    <div class="reg-step" id="regStep4">
+      <div class="result-box">
+        <div style="font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue-main);font-family:var(--font-m);margin-bottom:1rem">Hasil Tes Seleksi</div>
+        <div class="result-score" id="resultScore">–</div>
+        <div style="font-size:.9rem;color:var(--text-muted);margin-bottom:.75rem">dari 100 poin</div>
+        <div id="resultBadge"></div>
+        <div class="result-kelas" id="resultKelas"></div>
+        <div class="result-msg" id="resultMsg"></div>
+        <div id="resultActions"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ========= DATA =========
+const drillQuestions=[
+  {no:1,diff:2,materi:"Aljabar Dasar",soal:"Jika 3x + 7 = 22, tentukan nilai x.",answers:["5","x=5"],pembahasan:"3x + 7 = 22  →  3x = 15  →  x = 5"},
+  {no:2,diff:3,materi:"Geometri — Bangun Datar",soal:"Sebuah trapesium memiliki sisi sejajar 8 cm dan 12 cm, serta tinggi 5 cm. Hitunglah luasnya!",answers:["50"],pembahasan:"L = ½ × (a + b) × t = ½ × (8+12) × 5 = ½ × 100 = 50 cm²"},
+  {no:3,diff:2,materi:"Bilangan — Faktor",soal:"Tentukan semua faktor positif dari 36!",answers:["1,2,3,4,6,9,12,18,36","1 2 3 4 6 9 12 18 36"],pembahasan:"Faktor 36 = 1, 2, 3, 4, 6, 9, 12, 18, 36 (total 9 faktor)"},
+  {no:4,diff:3,materi:"Fungsi Kuadrat",soal:"Diketahui f(x) = 2x² − 3x + 1. Hitunglah nilai f(3)!",answers:["10"],pembahasan:"f(3) = 2(9) − 3(3) + 1 = 18 − 9 + 1 = 10"},
+  {no:5,diff:4,materi:"Trigonometri",soal:"Hitunglah: sin 30° + cos 60° + tan 45°",answers:["2"],pembahasan:"sin30°=½, cos60°=½, tan45°=1. Jadi ½ + ½ + 1 = 2"},
+  {no:6,diff:2,materi:"Statistika — Rata-rata",soal:"Hitunglah rata-rata dari: 4, 7, 13, 16, 10",answers:["10"],pembahasan:"(4+7+13+16+10) ÷ 5 = 50 ÷ 5 = 10"},
+  {no:7,diff:3,materi:"Geometri — Lingkaran",soal:"Hitunglah keliling lingkaran dengan jari-jari 7 cm!\n(Gunakan π = 22/7)",answers:["44","44cm","44 cm"],pembahasan:"K = 2πr = 2 × (22/7) × 7 = 2 × 22 = 44 cm"},
+  {no:8,diff:4,materi:"Sistem Persamaan Linear",soal:"Selesaikan sistem berikut dan cari nilai x + y:\n2x + 3y = 12\nx − y = 1",answers:["5","x+y=5"],pembahasan:"Dari x−y=1 → x=y+1. Substitusi: 2(y+1)+3y=12 → 5y=10 → y=2, x=3. x+y=5"},
+  {no:9,diff:3,materi:"Aritmetika — KPK",soal:"Tentukan KPK dari 12 dan 18!",answers:["36"],pembahasan:"12=2²×3, 18=2×3². KPK = 2²×3² = 4×9 = 36"},
+  {no:10,diff:5,materi:"Deret Aritmetika",soal:"Hitunglah: 1 + 3 + 5 + 7 + ... + 19",answers:["100"],pembahasan:"n=10 suku, a=1, Un=19. Sn = n/2×(a+Un) = 5×20 = 100"}
+];
+
+const selectionQs=[
+  {q:"Berapakah hasil dari 2 + 3 × 4?",opts:["20","14","24","10"],correct:1},
+  {q:"15% dari 80 adalah ...",opts:["10","15","12","8"],correct:2},
+  {q:"Keliling persegi panjang dengan panjang 6 cm dan lebar 4 cm adalah ...",opts:["24 cm","20 cm","10 cm","48 cm"],correct:1},
+  {q:"Nilai dari √49 adalah ...",opts:["6","8","7","9"],correct:2},
+  {q:"Jika 2x = 14, maka x = ...",opts:["5","6","8","7"],correct:3},
+  {q:"Sebuah segitiga memiliki sudut 60° dan 70°. Besar sudut ketiga adalah ...",opts:["40°","50°","60°","70°"],correct:1},
+  {q:"Nilai dari 2³ adalah ...",opts:["6","9","8","12"],correct:2},
+  {q:"KPK dari 4 dan 6 adalah ...",opts:["2","24","8","12"],correct:3},
+  {q:"Bentuk sederhana dari 3/12 adalah ...",opts:["1/6","1/4","1/3","2/6"],correct:1},
+  {q:"Sebuah mobil melaju 60 km/jam selama 2,5 jam. Jarak yang ditempuh adalah ...",opts:["120 km","130 km","150 km","160 km"],correct:2}
+];
+
+const bpData={
+  SD:{
+    label:"SD · Juni 2026",
+    soal:"Seekor siput berada di dasar sumur sedalam 12 meter. Setiap siang, siput naik 3 meter. Setiap malam, siput turun 2 meter. Namun, pada hari ke-5 dan kelipatannya, siput terlalu lelah sehingga tidak naik sama sekali di siang hari dan hanya turun 1 meter di malam hari.\n\nPada hari ke berapa siput pertama kali mencapai permukaan?",
+    hof:[
+      {rank:"🥇",name:"Aditya Ramadhan",school:"SDN 5 Surabaya · Mei 2026",time:"14j 23m"},
+      {rank:"🥈",name:"Salsabila Putri",school:"SD Petra 5 · April 2026",time:"31j 17m"},
+      {rank:"🥉",name:"Mikael Tanaka",school:"SD Al-Hikmah · Maret 2026",time:"58j 44m"}
+    ]
+  },
+  SMP:{
+    label:"SMP · Juni 2026",
+    soal:"Diberikan bilangan bulat n ≥ 1. Tentukan semua nilai n sehingga n³ + 2n² + n dapat dibagi habis oleh n² + n + 1.\n\nTuliskan semua solusi beserta bukti bahwa tidak ada solusi lain.",
+    hof:[
+      {rank:"🥇",name:"Renata Kusuma",school:"SMPN 1 Surabaya · Mei 2026",time:"8j 52m"},
+      {rank:"🥈",name:"Brahmana Satria",school:"SMP Kristen Petra · April 2026",time:"21j 03m"},
+      {rank:"🥉",name:"Zahra Nabilah",school:"SMPN 6 Surabaya · Maret 2026",time:"47j 30m"}
+    ]
+  },
+  SMA:{
+    label:"SMA · Juni 2026",
+    soal:"Misalkan a₁, a₂, a₃, ... adalah barisan bilangan riil positif dengan a₁ = 1 dan aₙ₊₁ = aₙ + 1/√aₙ untuk setiap n ≥ 1.\n\nBuktikan bahwa tidak ada bilangan bulat positif n sehingga aₙ ≤ 2026.",
+    hof:[
+      {rank:"🥇",name:"Vincenza Ardelia",school:"SMAN 5 Surabaya · Mei 2026",time:"3j 14m"},
+      {rank:"🥈",name:"Dharma Pratama",school:"SMA Kristen Petra 1 · April 2026",time:"19j 48m"},
+      {rank:"🥉",name:"Naufal Hasan",school:"SMAN 2 Surabaya · Maret 2026",time:"41j 22m"}
+    ]
+  }
+};
+
+const coaches=[
+  {initials:"AP",name:"Dr. Andika Prasetyo",title:"Koordinator Akademik",spec:"Kalkulus & Analisis Real",edu:"Ph.D. Matematika, ITB 2018",achieve:"Pembina OSN Matematika Nasional 2019–2023"},
+  {initials:"BS",name:"Budi Santoso, M.Sc.",title:"Senior Coach",spec:"Aljabar & Teori Bilangan",edu:"M.Sc. Matematika Murni, UGM 2015",achieve:"Medali Emas IMO 2008"},
+  {initials:"CM",name:"Citra Maharani, S.Pd.",title:"Coach SD & SMP",spec:"Aritmetika & Geometri Dasar",edu:"S.Pd. Pendidikan Matematika, UNESA 2019",achieve:"Juara 1 Olimpiade Matematika Jatim 2016"},
+  {initials:"DE",name:"Dimas Erlangga, M.T.",title:"Coach SMA",spec:"Trigonometri & Statistika",edu:"M.T. Matematika Terapan, ITS 2020",achieve:"3× Pembimbing OSN Provinsi"},
+  {initials:"EK",name:"Elvira Kusuma, S.Si.",title:"Coach SMP & SMA",spec:"Probabilitas & Kombinatorika",edu:"S.Si. Statistika, UNAIR 2021",achieve:"Finalis IMO Shortlist 2017"},
+  {initials:"FN",name:"Fajar Nugraha, M.Sc.",title:"Senior Coach",spec:"Geometri Koordinat",edu:"M.Sc. Matematika, UI 2016",achieve:"Silver Medal ASEAN Math Olympiad 2012"},
+  {initials:"GP",name:"Gita Permata, S.Pd.",title:"Coach SD",spec:"Matematika Dasar & Logika",edu:"S.Pd. PGSD Matematika, UM 2020",achieve:"Penulis Modul Olimpiade SD Nasional"},
+  {initials:"HW",name:"Hendra Wijaya, M.Si.",title:"Research Coach",spec:"Teori Graf & Matematika Diskret",edu:"M.Si. Matematika, UNPAD 2017",achieve:"Kontributor Soal IMAS 2020–2024"}
+];
+
+// ========= STATE =========
+let drillState={streak:0,daily:0,totalCorrect:0};
+let testTimerInterval=null;
+let testTimeLeft=1200;
+let testAnswers=new Array(10).fill(-1);
+let testSubmitted=false;
+let bpTimerInterval=null;
+
+// ========= NAV =========
+function scrollToSection(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+}
+
+// ========= COACHES =========
+function buildCoaches(){
+  const track=document.getElementById('coachTrack');
+  const doubled=[...coaches,...coaches];
+  track.innerHTML=doubled.map(c=>`
+    <div class="coach-card">
+      <div class="coach-avatar">${c.initials}</div>
+      <h4>${c.name}</h4>
+      <div class="coach-title">${c.title}</div>
+      <div class="coach-spec">${c.spec}</div>
+      <div class="coach-edu">${c.edu}</div>
+      <div class="coach-achieve">${c.achieve}</div>
+    </div>`).join('');
+}
+
+// ========= LOGIN =========
+function openLogin(){document.getElementById('loginModal').classList.add('active')}
+function closeLogin(){document.getElementById('loginModal').classList.remove('active')}
+
+// ========= SPRING DRILLS =========
+function openDrills(){
+  document.getElementById('drillsOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+  renderDrills();
+}
+function closeDrills(){
+  document.getElementById('drillsOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+function renderDrills(){
+  const body=document.getElementById('quizBody');
+  body.innerHTML=drillQuestions.map((q,i)=>{
+    const stars=Array(5).fill(0).map((_,j)=>`<span class="${j<q.diff?'filled':''}">&nbsp;</span>`).join('');
+    return`<div class="drill-question" id="dq${i}">
+      <div class="dq-meta">
+        <span class="dq-num">SOAL ${q.no}</span>
+        <div class="dq-diff">${stars}</div>
+        <span class="dq-materi">${q.materi}</span>
+      </div>
+      <div class="dq-soal">${q.soal}</div>
+      <textarea class="dq-input" id="dqa${i}" placeholder="Tuliskan jawabanmu di sini..."></textarea>
+      <div class="dq-submit">
+        <button class="btn btn-primary btn-sm" onclick="submitDrill(${i})">Submit</button>
+      </div>
+      <div class="dq-feedback" id="dqf${i}"></div>
+    </div>`;
+  }).join('');
+  updateDrillStats();
+}
+
+function submitDrill(i){
+  const q=drillQuestions[i];
+  const inp=document.getElementById('dqa'+i);
+  const fb=document.getElementById('dqf'+i);
+  const box=document.getElementById('dq'+i);
+  const val=inp.value.trim();
+  if(!val){alert('Isi jawaban terlebih dahulu!');return;}
+  
+  const norm=v=>v.toLowerCase().replace(/\s+/g,'').replace(/[^0-9a-z,\.\/]/g,'');
+  const userN=norm(val);
+  const isCorrect=q.answers.some(a=>userN===norm(a)||userN.includes(norm(a))||norm(a).includes(userN));
+  
+  box.classList.add('submitted');
+  if(isCorrect){
+    drillState.totalCorrect++;
+    drillState.daily=Math.min(drillState.daily+1,3);
+    if(drillState.daily===1)drillState.streak++;
+    fb.className='dq-feedback correct';
+    fb.innerHTML=`<div class="fb-verdict ok">✓ Benar!</div><div class="fb-pembahasan"><strong>Pembahasan:</strong> ${q.pembahasan}</div>`;
+  }else{
+    fb.className='dq-feedback wrong';
+    fb.innerHTML=`<div class="fb-verdict no">✗ Kurang tepat.</div><div class="fb-pembahasan"><strong>Pembahasan:</strong> ${q.pembahasan}</div>`;
+  }
+  updateDrillStats();
+}
+
+function updateDrillStats(){
+  const ranks=['#–','#95','#72','#48','#31','#18','#11','#7','#4','#2','#1'];
+  document.getElementById('dsStreak').textContent='🔥 '+drillState.streak;
+  document.getElementById('dsDaily').textContent=drillState.daily+'/3';
+  document.getElementById('dsTotal').textContent=drillState.totalCorrect;
+  document.getElementById('dsRank').textContent=ranks[Math.min(drillState.totalCorrect,10)];
+}
+
+// ========= BLACK PROBLEM TIMER =========
+function startBPTimer(){
+  let secs=71*3600+59*60+59;
+  bpTimerInterval=setInterval(()=>{
+    secs--;
+    if(secs<=0){clearInterval(bpTimerInterval);secs=0;}
+    const h=Math.floor(secs/3600);
+    const m=Math.floor((secs%3600)/60);
+    const s=secs%60;
+    document.getElementById('bpH').textContent=String(h).padStart(2,'0');
+    document.getElementById('bpM').textContent=String(m).padStart(2,'0');
+    document.getElementById('bpS').textContent=String(s).padStart(2,'0');
+  },1000);
+}
+
+function setBPTab(level, el){
+  document.querySelectorAll('.bp-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const d=bpData[level];
+  document.getElementById('bpProblemBox').querySelector('.bp-q-label').textContent=`The Black Problem · ${d.label}`;
+  document.getElementById('bpProblemText').textContent=d.soal;
+  document.getElementById('bpHofSub').textContent=`THE SURVIVORS — ${level}`;
+  document.getElementById('bpHofList').innerHTML=d.hof.map(h=>`
+    <div class="bp-survivor">
+      <div class="bp-survivor-rank">${h.rank}</div>
+      <div class="bp-survivor-info"><div class="sv-name">${h.name}</div><div class="sv-school">${h.school}</div></div>
+      <div class="bp-survivor-time">${h.time}</div>
+    </div>`).join('');
+}
+
+// ========= REGISTRATION =========
+function openRegOverlay(){
+  document.getElementById('regOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+  goRegStep(1);
+}
+function closeRegOverlay(){
+  document.getElementById('regOverlay').classList.remove('active');
+  document.body.style.overflow='';
+  if(testTimerInterval){clearInterval(testTimerInterval);testTimerInterval=null;}
+}
+
+function goRegStep(n){
+  [1,2,3,4].forEach(i=>{
+    document.getElementById('regStep'+i).classList.toggle('active',i===n);
+    const dot=document.getElementById('sd'+i);
+    dot.classList.toggle('active',i===n);
+    dot.classList.toggle('done',i<n);
+  });
+  if(n===2){
+    const email=document.getElementById('regEmail')?.value||'email kamu';
+    document.getElementById('evEmailDisplay').textContent=email;
+  }
+  if(n===3) startTestStep();
+  document.querySelector('#regOverlay .reg-body').scrollTop=0;
+}
+
+function evNext(el,idx){
+  if(el.value&&idx<6){
+    const inputs=document.querySelectorAll('.ev-code-input');
+    inputs[idx]?.focus();
+  }
+}
+
+function startTestStep(){
+  const nama=document.getElementById('regNama')?.value||'Peserta';
+  const kelas=document.getElementById('regKelas')?.value||'–';
+  document.getElementById('testNama').textContent=nama;
+  document.getElementById('testJenjang').textContent=kelas;
+  const now=new Date();
+  document.getElementById('testTanggal').textContent=now.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+  
+  testAnswers=new Array(10).fill(-1);
+  testSubmitted=false;
+  document.getElementById('testSubmitBtn').style.display='';
+  
+  const qBox=document.getElementById('testQuestions');
+  qBox.innerHTML=selectionQs.map((q,i)=>`
+    <div class="test-q" id="tq${i}">
+      <div class="test-q-num">SOAL ${i+1} / 10</div>
+      <div class="test-q-text">${q.q}</div>
+      <div class="test-options">
+        ${q.opts.map((o,j)=>`
+          <label class="test-option" id="to${i}_${j}" onclick="selectTestOpt(${i},${j})">
+            <input type="radio" name="tq${i}" value="${j}">
+            <span><strong>${String.fromCharCode(65+j)}.</strong> ${o}</span>
+          </label>`).join('')}
+      </div>
+    </div>`).join('');
+  
+  testTimeLeft=1200;
+  if(testTimerInterval)clearInterval(testTimerInterval);
+  testTimerInterval=setInterval(()=>{
+    testTimeLeft--;
+    const m=Math.floor(testTimeLeft/60);
+    const s=testTimeLeft%60;
+    const el=document.getElementById('testTimer');
+    if(el)el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    if(el)el.style.color=testTimeLeft<60?'var(--error)':'var(--blue-rich)';
+    if(testTimeLeft<=0){clearInterval(testTimerInterval);if(!testSubmitted)submitTest();}
+  },1000);
+}
+
+function selectTestOpt(qi,oi){
+  testAnswers[qi]=oi;
+  document.querySelectorAll(`[id^="to${qi}_"]`).forEach(el=>el.classList.remove('selected'));
+  document.getElementById(`to${qi}_${oi}`)?.classList.add('selected');
+}
+
+function submitTest(){
+  if(testSubmitted)return;
+  testSubmitted=true;
+  clearInterval(testTimerInterval);
+  
+  let correct=0;
+  selectionQs.forEach((q,i)=>{
+    const ua=testAnswers[i];
+    for(let j=0;j<4;j++){
+      const el=document.getElementById(`to${i}_${j}`);
+      if(!el)continue;
+      if(j===q.correct)el.classList.add('correct-ans');
+      else if(j===ua&&ua!==q.correct)el.classList.add('wrong-ans');
+    }
+    if(ua===q.correct)correct++;
+  });
+  
+  document.getElementById('testSubmitBtn').style.display='none';
+  
+  setTimeout(()=>{
+    const score=correct*10;
+    document.getElementById('resultScore').textContent=score;
+    
+    let kelas='',msg='',badgeHTML='',scoreClass='';
+    if(score>=90){
+      kelas='Kelas Apex 🏆';badgeHTML='<div class="result-badge rb-apex">✦ APEX</div>';
+      msg='Luar biasa! Kamu masuk kelas Apex — level tertinggi HighSpring. Selamat datang di lingkungan paling ambisius!';
+      scoreClass='apex';
+    }else if(score>=80){
+      kelas='Kelas Vertex ⭐';badgeHTML='<div class="result-badge rb-vertex">✦ VERTEX</div>';
+      msg='Bagus sekali! Kamu masuk kelas Vertex. Terus tingkatkan untuk meraih Apex di Monthly Race berikutnya!';
+      scoreClass='vertex';
+    }else if(score>=70){
+      kelas='Kelas Vector ✨';badgeHTML='<div class="result-badge rb-vector">✦ VECTOR</div>';
+      msg='Selamat! Kamu masuk kelas Vector. Bangun fondasi yang kuat dan naikkan posisimu setiap bulan!';
+      scoreClass='vector';
+    }else{
+      kelas='Belum Berhasil';badgeHTML='<div class="result-badge rb-fail">✗ Belum Lolos</div>';
+      msg='Mohon maaf, kamu belum berhasil mencapai skor minimal. Silakan coba lagi di lain waktu. Tetap semangat!';
+      scoreClass='fail';
+    }
+    
+    document.getElementById('resultScore').className='result-score '+scoreClass;
+    document.getElementById('resultKelas').textContent=kelas;
+    document.getElementById('resultMsg').textContent=msg;
+    document.getElementById('resultBadge').innerHTML=badgeHTML;
+    document.getElementById('resultActions').innerHTML=score>=70
+      ?`<button class="btn btn-primary" onclick="closeRegOverlay()">Kembali ke Beranda 🏠</button>`
+      :`<button class="btn btn-primary" onclick="closeRegOverlay()">Kembali ke Beranda 🏠</button>`;
+    
+    goRegStep(4);
+  },800);
+}
+
+// ========= INIT =========
+document.addEventListener('DOMContentLoaded',()=>{
+  buildCoaches();
+  startBPTimer();
+  
+  // Scroll spy
+  const sections=['home','facility','springdrills','monthlyrace','thelearners','blackproblem','ourcoach','registration'];
+  const tabs=document.querySelectorAll('.nav-tab');
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const id=e.target.id;
+        tabs.forEach((t,i)=>{
+          const map=['facility','springdrills','monthlyrace','thelearners','blackproblem','ourcoach','registration'];
+          t.classList.toggle('active',map[i]===id);
+        });
+      }
+    });
+  },{threshold:.3});
+  sections.forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el);});
+  
+  // Logo click
+  document.querySelector('.logo-block').addEventListener('click',()=>{
+    document.getElementById('home').scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
